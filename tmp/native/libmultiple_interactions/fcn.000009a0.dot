@@ -1,0 +1,26 @@
+            ; CALL XREF from fcn.000009d0 @ 0xa48
+┌ 36: fcn.000009a0 (uint32_t arg1);
+│           ; arg uint32_t arg1 @ r0
+│           0x000009a0      0128           cmp r0, 1                   ; aav.0x00000001 ; "ELF\x01\x01\x01" ; arg1
+│       ┌─< 0x000009a2      06d0           beq 0x9b2
+│       │   0x000009a4      0228           cmp r0, 2                   ; aav.0x00000002 ; "LF\x01\x01\x01"
+│      ┌──< 0x000009a6      07d0           beq 0x9b8
+│      ││   0x000009a8      0028           cmp r0, 0
+│     ┌───< 0x000009aa      09d1           bne 0x9c0
+│     │││   0x000009ac      0548           ldr r0, [0x000009c4]        ; [0x9c4:4]=0x25fe
+│     │││   0x000009ae      7844           add r0, pc
+│    ┌────< 0x000009b0      04e0           b 0x9bc
+│    ││││   ; CODE XREF from fcn.000009a0 @ 0x9a2
+│    │││└─> 0x000009b2      0548           ldr r0, [0x000009c8]        ; [0x9c8:4]=0x25fc
+│    │││    0x000009b4      7844           add r0, pc
+│    │││┌─< 0x000009b6      01e0           b 0x9bc
+│    ││││   ; CODE XREF from fcn.000009a0 @ 0x9a6
+│    ││└──> 0x000009b8      0448           ldr r0, [0x000009cc]        ; [0x9cc:4]=0x25fa
+│    ││ │   0x000009ba      7844           add r0, pc
+│    ││ │   ; CODE XREFS from fcn.000009a0 @ 0x9b0, 0x9b6
+│    └──└─> 0x000009bc      0068           ldr r0, [r0]
+│     │ ┌─< 0x000009be      00e0           b 0x9c2
+│     │ │   ; CODE XREF from fcn.000009a0 @ 0x9aa
+│     └───> 0x000009c0      0020           movs r0, 0
+│       │   ; CODE XREF from fcn.000009a0 @ 0x9be
+└       └─> 0x000009c2      7047           bx lr

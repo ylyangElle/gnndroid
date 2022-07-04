@@ -1,0 +1,5 @@
+            ; CALL XREF from fcn.00000ad2 @ 0xb02
+            ; CALL XREF from fcn.00000b0c @ 0xbac
+            ; CALL XREF from fcn.00000bcc @ +0x98
+┌ 2: fcn.00000ad0 ();
+└           0x00000ad0      7047           bx lr

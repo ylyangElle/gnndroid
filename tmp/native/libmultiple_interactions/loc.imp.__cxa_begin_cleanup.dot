@@ -1,0 +1,6 @@
+            ; CALL XREF from fcn.00000da4 @ 0xe84
+┌ 12: loc.imp.__cxa_begin_cleanup ();
+│           0x00000744      00c68fe2       add ip, pc, 0
+│           0x00000748      02ca8ce2       add ip, ip, 0x2000
+│           ; DATA XREF from loc.imp.__cxa_begin_cleanup @ 0x744
+└           0x0000074c      acf8bce5       ldr pc, [ip, 0x8ac]!

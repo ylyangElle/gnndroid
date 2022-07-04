@@ -1,0 +1,44 @@
+            ; CALL XREF from fcn.00000bcc @ +0xae
+┌ 78: fcn.00000bcc (int16_t arg1, int16_t arg2);
+│           ; var int16_t var_1e4h @ sp+0x0
+│           ; var void *s1 @ sp+0x4
+│           ; var int16_t var_1a4h @ sp+0x40
+│           ; arg int16_t arg1 @ r0
+│           ; arg int16_t arg2 @ r1
+│           0x00000bcc      f0b5           push {r4, r5, r6, r7, lr}
+│           0x00000bce      cb6b           ldr r3, [r1, 0x3c]          ; arg2
+│           0x00000bd0      f9b0           sub sp, 0x1e4
+│           0x00000bd2      0b64           str r3, [r1, 0x40]          ; arg2
+│           0x00000bd4      051c           adds r5, r0, 0              ; arg1
+│           0x00000bd6      0c1c           adds r4, r1, 0              ; arg2
+│           0x00000bd8      01a8           add r0, sp, 4               ; void *s1
+│           0x00000bda      0431           adds r1, 4                  ; 0x2 ; "LF\x01\x01\x01" ; const void *s2
+│           0x00000bdc      4022           movs r2, 0x40               ; '@' ; size_t n
+│           0x00000bde      fff7aced       blx sym.imp.memcpy          ; void *memcpy(void *s1, const void *s2, size_t n)
+│           0x00000be2      0123           movs r3, 1
+│           0x00000be4      5b42           rsbs r3, r3, 0
+│           0x00000be6      0093           str r3, [sp]
+│           ; CODE XREF from fcn.00000bcc @ 0xc00
+│       ┌─> 0x00000be8      281c           adds r0, r5, 0
+│       ╎   0x00000bea      1099           ldr r1, [sp + var_1a4h]
+│       ╎   0x00000bec      fff7f0fe       bl fcn.000009d0
+│       ╎   0x00000bf0      0028           cmp r0, 0
+│      ┌──< 0x00000bf2      0fd1           bne 0xc14
+│      │╎   0x00000bf4      291c           adds r1, r5, 0
+│      │╎   0x00000bf6      6a46           mov r2, sp
+│      │╎   0x00000bf8      2b69           ldr r3, [r5, 0x10]
+│      │╎   0x00000bfa      9847           blx r3
+│      │╎   0x00000bfc      071e           subs r7, r0, 0
+│      │╎   0x00000bfe      082f           cmp r7, 8                   ; aav.0x00000008
+│      │└─< 0x00000c00      f2d0           beq 0xbe8
+│      │    0x00000c02      6846           mov r0, sp
+│      │    0x00000c04      fff736ff       bl fcn.00000a74
+│      │    0x00000c08      062f           cmp r7, 6                   ; aav.0x00000006
+│      │┌─< 0x00000c0a      03d1           bne 0xc14
+│      ││   0x00000c0c      281c           adds r0, r5, 0
+│      ││   0x00000c0e      211c           adds r1, r4, 0
+│      ││   0x00000c10      fff75fff       bl fcn.00000ad2
+│      ││   ; CODE XREFS from fcn.00000bcc @ 0xbf2, 0xc0a
+│      └└─> 0x00000c14      0920           movs r0, 9
+│           0x00000c16      79b0           add sp, 0x1e4
+└           0x00000c18      f0bd           pop {r4, r5, r6, r7, pc}

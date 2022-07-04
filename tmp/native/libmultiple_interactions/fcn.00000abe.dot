@@ -1,0 +1,12 @@
+            ; CALL XREFS from fcn.00000da4 @ 0xeb8, 0xf4c
+┌ 14: fcn.00000abe (int16_t arg1);
+│           ; arg int16_t arg1 @ r0
+│           0x00000abe      0268           ldr r2, [r0]                ; 0x1d0
+│                                                                      ; aav.0x000001d0 ; arg1
+│           0x00000ac0      0023           movs r3, 0
+│           0x00000ac2      9a42           cmp r2, r3
+│       ┌─< 0x00000ac4      00d0           beq 0xac8
+│       │   0x00000ac6      1358           ldr r3, [r2, r0]
+│       │   ; CODE XREF from fcn.00000abe @ 0xac4
+│       └─> 0x00000ac8      181c           adds r0, r3, 0
+└           0x00000aca      7047           bx lr

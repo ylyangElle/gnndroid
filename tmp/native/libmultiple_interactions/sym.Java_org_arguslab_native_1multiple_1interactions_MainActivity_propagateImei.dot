@@ -1,0 +1,64 @@
+┌ 102: sym.Java_org_arguslab_native_1multiple_1interactions_MainActivity_propagateImei (int16_t arg1, int16_t arg2, int16_t arg_ch);
+│           ; var int16_t var_4h @ sp+0x0
+│           ; arg int16_t arg_ch @ sp+0x10
+│           ; arg int16_t arg1 @ r0
+│           ; arg int16_t arg2 @ r1
+│           0x000007b4  ~   f0b5           push {r4, r5, r6, r7, lr}
+│           ; UNKNOWN XREF from aav.0x00000216 @ +0x1e
+│           ;-- aav.0x000007b5:
+│           0x000007b5                    unaligned
+│           0x000007b6      03af           add r7, sp, 0xc
+│           0x000007b8      81b0           sub sp, 4
+│           0x000007ba      04b4           push {r2}
+│           0x000007bc      40bc           pop {r6}
+│           0x000007be      0091           str r1, [sp]                ; arg2
+│           0x000007c0      0500           movs r5, r0                 ; arg1
+│           0x000007c2      2868           ldr r0, [r5]
+│           0x000007c4      c26f           ldr r2, [r0, 0x7c]
+│           0x000007c6      2800           movs r0, r5
+│           0x000007c8      3100           movs r1, r6
+│           0x000007ca      9047           blx r2
+│           0x000007cc      0100           movs r1, r0
+│           0x000007ce      2f20           movs r0, 0x2f               ; '/'
+│           0x000007d0      c000           lsls r0, r0, 3
+│           0x000007d2      2a68           ldr r2, [r5]
+│           0x000007d4      1458           ldr r4, [r2, r0]
+│           0x000007d6      11a2           adr r2, 0x44                ; "str"
+│                                                                      ; 0x81c
+│           0x000007d8      11a3           adr r3, 0x44                ; "Ljava/lang/String;"
+│                                                                      ; 0x820
+│           0x000007da      2800           movs r0, r5
+│           0x000007dc      a047           blx r4
+│           0x000007de      0200           movs r2, r0
+│           0x000007e0      5f20           movs r0, 0x5f               ; '_'
+│           0x000007e2      8000           lsls r0, r0, 2
+│           0x000007e4      2968           ldr r1, [r5]
+│           0x000007e6      0b58           ldr r3, [r1, r0]
+│           0x000007e8      2800           movs r0, r5
+│           0x000007ea      3100           movs r1, r6
+│           0x000007ec      9847           blx r3
+│           0x000007ee      0600           movs r6, r0
+│           0x000007f0      2868           ldr r0, [r5]
+│           0x000007f2      8269           ldr r2, [r0, 0x18]
+│           0x000007f4      0fa1           adr r1, 0x3c                ; "org/arguslab/native_multiple_interactions/MainActivity"
+│                                                                      ; 0x834
+│           0x000007f6      2800           movs r0, r5
+│           0x000007f8      9047           blx r2
+│           0x000007fa      0100           movs r1, r0
+│           0x000007fc      2868           ldr r0, [r5]
+│           ; DATA XREF from section..ARM.exidx @ +0x40
+│           0x000007fe      8422           movs r2, 0x84
+│           0x00000800      8458           ldr r4, [r0, r2]
+│           0x00000802      1aa2           adr r2, 0x68                ; "toNativeAgain"
+│                                                                      ; 0x86c
+│           0x00000804      1da3           adr r3, 0x74                ; "(Ljava/lang/String;)V"
+│                                                                      ; 0x87c
+│           0x00000806      2800           movs r0, r5
+│           0x00000808      a047           blx r4
+│           0x0000080a      0200           movs r2, r0
+│           0x0000080c      2800           movs r0, r5
+│           0x0000080e      0099           ldr r1, [sp]
+│           0x00000810      3300           movs r3, r6
+│           0x00000812      fff774ef       blx fcn.000006fc
+│           0x00000816      01b0           add sp, 4
+└           0x00000818      f0bd           pop {r4, r5, r6, r7, pc}

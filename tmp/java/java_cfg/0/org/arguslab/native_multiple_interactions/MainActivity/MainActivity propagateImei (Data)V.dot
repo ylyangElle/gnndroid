@@ -1,0 +1,11 @@
+digraph G {
+	graph [bb="0,0,0,0",
+		rankdir=TB
+	];
+	node [label="\N",
+		shape=plaintext
+	];
+	subgraph cluster_a2bbeddcd86b61359001c72141a5961b {
+		graph [label="Lorg/arguslab/native_multiple_interactions/MainActivity;.propagateImei->(Lorg/arguslab/native_multiple_interactions/Data;)V"];
+	}
+}

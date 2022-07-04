@@ -1,0 +1,12 @@
+# Lorg/arguslab/native_multiple_interactions/MainActivity;-><clinit>()V [access_flags=static constructor]
+#
+# Parameters:
+# local registers: v0...v0
+#
+# - return:void
+
+<clinit>-BB@0x0 : 
+	0       (00000000) const-string         v0, 'multiple_interactions'
+	1       (00000004) invoke-static        v0, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V
+	2       (0000000a) return-void          
+

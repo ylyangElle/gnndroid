@@ -1,0 +1,16 @@
+            ; CALL XREF from fcn.00000c9e @ 0xca8
+            ; CALL XREF from fcn.00000ce8 @ 0xcf2
+            ; CALL XREF from fcn.00001046 @ 0x1058
+            ; DATA XREF from fcn.00001784 @ 0x178c
+┌ 18: fcn.00001784 ();
+│           0x00001784      02b4           push {r1}
+│           0x00001786      7146           mov r1, lr
+│           ; DATA XREF from fcn.00001784 @ 0x1790
+│           0x00001788      4908           lsrs r1, r1, 1
+│           0x0000178a      4900           lsls r1, r1, 1
+│           0x0000178c      095c           ldrb r1, [r1, r0]           ; 0x1784
+│                                                                      ; fcn.00001784
+│           0x0000178e      4900           lsls r1, r1, 1
+│           0x00001790      8e44           add lr, r1
+│           0x00001792      02bc           pop {r1}
+└           0x00001794      7047           bx lr

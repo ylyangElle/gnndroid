@@ -1,0 +1,98 @@
+            ; CALL XREFS from fcn.00000bcc @ +0x5c, +0x74, +0xba
+┌ 184: fcn.00000b0c (int16_t arg1, int16_t arg3, void *s1, void *s2);
+│           ; arg void *s1 @ sp+0x1c
+│           ; arg void *s2 @ sp+0x1f8
+│           ; arg int16_t arg1 @ r0
+│           ; arg int16_t arg3 @ r2
+│           0x00000b0c      f0b5           push {r4, r5, r6, r7, lr}
+│           0x00000b0e      2d4c           ldr r4, [0x00000bc4]        ; [0xbc4:4]=0xfffffc24
+│           0x00000b10      c368           ldr r3, [r0, 0xc]           ; arg1
+│           0x00000b12      a544           add sp, r4
+│           0x00000b14      0493           str r3, [sp, 0x10]
+│           0x00000b16      0025           movs r5, 0
+│           0x00000b18      8369           ldr r3, [r0, 0x18]          ; arg1
+│           0x00000b1a      041c           adds r4, r0, 0              ; 0x2 ; "LF\x01\x01\x01" ; arg1
+│           0x00000b1c      171c           adds r7, r2, 0              ; arg3
+│           0x00000b1e      0431           adds r1, 4                  ; const void *s2
+│           0x00000b20      07a8           add r0, sp, 0x1c            ; void *s1
+│           0x00000b22      4022           movs r2, 0x40               ; '@' ; size_t n
+│           0x00000b24      0593           str r3, [sp, 0x14]
+│           0x00000b26      fff708ee       blx sym.imp.memcpy          ; void *memcpy(void *s1, const void *s2, size_t n)
+│           0x00000b2a      0695           str r5, [sp, 0x18]
+│           0x00000b2c      0395           str r5, [sp, 0xc]
+│           ; CODE XREF from fcn.00000b0c @ 0xba2
+│       ┌─> 0x00000b2e      06ae           add r6, sp, 0x18
+│       ╎   0x00000b30      201c           adds r0, r4, 0              ; 0x2 ; "LF\x01\x01\x01"
+│       ╎   0x00000b32      316c           ldr r1, [r6, 0x40]
+│       ╎   0x00000b34      fff74cff       bl fcn.000009d0
+│       ╎   0x00000b38      7b42           rsbs r3, r7, 0
+│       ╎   0x00000b3a      7b41           adcs r3, r7
+│       ╎   0x00000b3c      0a22           movs r2, 0xa
+│       ╎   0x00000b3e      d31a           subs r3, r2, r3
+│       ╎   0x00000b40      0293           str r3, [sp, 8]
+│       ╎   0x00000b42      051e           subs r5, r0, 0
+│      ┌──< 0x00000b44      10d1           bne 0xb68
+│      │╎   0x00000b46      336c           ldr r3, [r6, 0x40]
+│      │╎   0x00000b48      7eaf           add r7, sp, 0x1f8
+│      │╎   0x00000b4a      f022           movs r2, 0xf0
+│      │╎   0x00000b4c      6361           str r3, [r4, 0x14]
+│      │╎   0x00000b4e      311c           adds r1, r6, 0              ; const void *s2
+│      │╎   0x00000b50      5200           lsls r2, r2, 1              ; size_t n
+│      │╎   0x00000b52      381c           adds r0, r7, 0              ; void *s1
+│      │╎   0x00000b54      fff7f0ed       blx sym.imp.memcpy          ; void *memcpy(void *s1, const void *s2, size_t n)
+│      │╎   0x00000b58      2369           ldr r3, [r4, 0x10]
+│      │╎   0x00000b5a      0298           ldr r0, [sp, 8]
+│      │╎   0x00000b5c      211c           adds r1, r4, 0              ; 0x2 ; "LF\x01\x01\x01"
+│      │╎   0x00000b5e      3a1c           adds r2, r7, 0
+│      │╎   0x00000b60      9847           blx r3
+│      │╎   0x00000b62      bb6b           ldr r3, [r7, 0x38]
+│      │╎   0x00000b64      0390           str r0, [sp, 0xc]
+│     ┌───< 0x00000b66      04e0           b 0xb72
+│     ││╎   ; CODE XREF from fcn.00000b0c @ 0xb44
+│     │└──> 0x00000b68      029a           ldr r2, [sp, 8]
+│     │ ╎   0x00000b6a      1023           movs r3, 0x10
+│     │ ╎   0x00000b6c      1a43           orrs r2, r3
+│     │ ╎   0x00000b6e      b36b           ldr r3, [r6, 0x38]
+│     │ ╎   0x00000b70      0292           str r2, [sp, 8]
+│     │ ╎   ; CODE XREF from fcn.00000b0c @ 0xb66
+│     └───> 0x00000b72      7364           str r3, [r6, 0x44]
+│       ╎   0x00000b74      059b           ldr r3, [sp, 0x14]
+│       ╎   0x00000b76      06ae           add r6, sp, 0x18
+│       ╎   0x00000b78      0193           str r3, [sp, 4]
+│       ╎   0x00000b7a      0096           str r6, [sp]
+│       ╎   0x00000b7c      0120           movs r0, 1
+│       ╎   0x00000b7e      0299           ldr r1, [sp, 8]
+│       ╎   0x00000b80      221c           adds r2, r4, 0              ; "LF\x01\x01\x01"
+│       ╎   0x00000b82      231c           adds r3, r4, 0              ; 0x2 ; "LF\x01\x01\x01"
+│       ╎   0x00000b84      049f           ldr r7, [sp, 0x10]
+│       ╎   0x00000b86      b847           blx r7
+│       ╎   0x00000b88      0028           cmp r0, 0
+│      ┌──< 0x00000b8a      14d1           bne 0xbb6
+│      │╎   0x00000b8c      002d           cmp r5, 0
+│     ┌───< 0x00000b8e      14d1           bne 0xbba
+│     ││╎   0x00000b90      f022           movs r2, 0xf0
+│     ││╎   0x00000b92      301c           adds r0, r6, 0              ; void *s1
+│     ││╎   0x00000b94      7ea9           add r1, sp, 0x1f8           ; const void *s2
+│     ││╎   0x00000b96      5200           lsls r2, r2, 1              ; size_t n
+│     ││╎   0x00000b98      fff7ceed       blx sym.imp.memcpy          ; void *memcpy(void *s1, const void *s2, size_t n)
+│     ││╎   0x00000b9c      039b           ldr r3, [sp, 0xc]
+│     ││╎   0x00000b9e      2f1c           adds r7, r5, 0              ; 0x2 ; "LF\x01\x01\x01"
+│     ││╎   0x00000ba0      082b           cmp r3, 8                   ; aav.0x00000008
+│     ││└─< 0x00000ba2      c4d0           beq 0xb2e
+│     ││    0x00000ba4      072b           cmp r3, 7                   ; aav.0x00000007
+│     ││┌─< 0x00000ba6      06d1           bne 0xbb6
+│     │││   0x00000ba8      281c           adds r0, r5, 0              ; 0x2 ; "LF\x01\x01\x01"
+│     │││   0x00000baa      316c           ldr r1, [r6, 0x40]
+│     │││   0x00000bac      fff790ff       bl fcn.00000ad0
+│     │││   0x00000bb0      07a8           add r0, sp, 0x1c
+│     │││   0x00000bb2      00f070eb       blx fcn.00001294
+│     │││   ; CODE XREFS from fcn.00000b0c @ 0xb8a, 0xba6
+│     │└└─> 0x00000bb6      0920           movs r0, 9
+│     │ ┌─< 0x00000bb8      00e0           b 0xbbc
+│     │ │   ; CODE XREF from fcn.00000b0c @ 0xb8e
+│     └───> 0x00000bba      281c           adds r0, r5, 0              ; 0x2 ; "LF\x01\x01\x01"
+│       │   ; CODE XREF from fcn.00000b0c @ 0xbb8
+│       └─> 0x00000bbc      f723           movs r3, 0xf7
+│           0x00000bbe      9b00           lsls r3, r3, 2
+│           0x00000bc0      9d44           add sp, r3
+└           0x00000bc2      f0bd           pop {r4, r5, r6, r7, pc}

@@ -1,0 +1,14 @@
+# Lorg/arguslab/native_multiple_interactions/MainActivity;->toNative(Lorg/arguslab/native_multiple_interactions/Data; Ljava/lang/String;)V [access_flags=private]
+#
+# Parameters:
+# - local registers: v0...v0
+# - v1:org.arguslab.native_multiple_interactions.Data
+# - v2:java.lang.String
+#
+# - return:void
+
+toNative-BB@0x0 : 
+	0       (00000000) iput-object          v2, v1, Lorg/arguslab/native_multiple_interactions/Data;->str Ljava/lang/String;
+	1       (00000004) invoke-virtual       v0, v1, Lorg/arguslab/native_multiple_interactions/MainActivity;->propagateImei(Lorg/arguslab/native_multiple_interactions/Data;)V
+	2       (0000000a) return-void          
+

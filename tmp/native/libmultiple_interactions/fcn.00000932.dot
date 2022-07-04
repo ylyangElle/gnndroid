@@ -1,0 +1,69 @@
+            ; CALL XREF from fcn.000009d0 @ 0xa0a
+┌ 110: fcn.00000932 (uint32_t arg2, int16_t arg3);
+│           ; var int16_t var_18h @ sp+0x4
+│           ; var int16_t var_14h @ sp+0x8
+│           ; var int16_t var_10h @ sp+0xc
+│           ; var int16_t var_ch @ sp+0x10
+│           ; var int16_t var_8h @ sp+0x14
+│           ; arg uint32_t arg2 @ r1
+│           ; arg int16_t arg3 @ r2
+│           0x00000932      f0b5           push {r4, r5, r6, r7, lr}
+│           0x00000934      0e1c           adds r6, r1, 0              ; arg2
+│           0x00000936      87b0           sub sp, 0x1c
+│           0x00000938      0029           cmp r1, 0                   ; arg2
+│       ┌─< 0x0000093a      2ed0           beq 0x99a
+│       │   0x0000093c      4b1e           subs r3, r1, 1              ; arg2
+│       │   0x0000093e      0027           movs r7, 0
+│       │   0x00000940      0192           str r2, [sp + var_18h]      ; arg3
+│       │   0x00000942      0590           str r0, [sp + var_8h]
+│       │   0x00000944      0393           str r3, [sp + var_10h]
+│       │   0x00000946      0293           str r3, [sp + var_14h]
+│       │   ; CODE XREFS from fcn.00000932 @ 0x980, 0x98c
+│     ┌┌──> 0x00000948      029b           ldr r3, [sp + var_14h]
+│     ╎╎│   0x0000094a      fb18           adds r3, r7, r3
+│     ╎╎│   0x0000094c      dc0f           lsrs r4, r3, 0x1f
+│     ╎╎│   0x0000094e      e418           adds r4, r4, r3
+│     ╎╎│   0x00000950      6410           asrs r4, r4, 1
+│     ╎╎│   0x00000952      059b           ldr r3, [sp + var_8h]
+│     ╎╎│   0x00000954      e500           lsls r5, r4, 3
+│     ╎╎│   0x00000956      5e19           adds r6, r3, r5
+│     ╎╎│   0x00000958      301c           adds r0, r6, 0
+│     ╎╎│   0x0000095a      fff7dfff       bl fcn.0000091c
+│     ╎╎│   0x0000095e      039b           ldr r3, [sp + var_10h]
+│     ╎╎│   0x00000960      0490           str r0, [sp + var_ch]
+│     ╎╎│   0x00000962      9c42           cmp r4, r3
+│    ┌────< 0x00000964      15d0           beq 0x992
+│    │╎╎│   0x00000966      059b           ldr r3, [sp + var_8h]
+│    │╎╎│   0x00000968      0835           adds r5, 8                  ; aav.0x00000008
+│    │╎╎│   0x0000096a      5819           adds r0, r3, r5             ; 0x6
+│    │╎╎│                                                              ; aav.0x00000006
+│    │╎╎│   0x0000096c      fff7d6ff       bl fcn.0000091c
+│    │╎╎│   0x00000970      019b           ldr r3, [sp + var_18h]
+│    │╎╎│   0x00000972      049a           ldr r2, [sp + var_ch]
+│    │╎╎│   0x00000974      9342           cmp r3, r2
+│   ┌─────< 0x00000976      04d2           bhs 0x982
+│   ││╎╎│   ; CODE XREF from fcn.00000932 @ 0x998
+│  ┌──────> 0x00000978      bc42           cmp r4, r7
+│ ┌───────< 0x0000097a      08d0           beq 0x98e
+│ │╎││╎╎│   0x0000097c      631e           subs r3, r4, 1
+│ │╎││╎╎│   0x0000097e      0293           str r3, [sp + var_14h]
+│ │╎││└───< 0x00000980      e2e7           b 0x948
+│ │╎││ ╎│   ; CODE XREF from fcn.00000932 @ 0x976
+│ │╎└─────> 0x00000982      019b           ldr r3, [sp + var_18h]
+│ │╎ │ ╎│   0x00000984      0138           subs r0, 1
+│ │╎ │ ╎│   0x00000986      8342           cmp r3, r0
+│ │╎ │┌───< 0x00000988      07d9           bls 0x99a
+│ │╎ ││╎│   0x0000098a      671c           adds r7, r4, 1
+│ │╎ ││└──< 0x0000098c      dce7           b 0x948
+│ │╎ ││ │   ; CODE XREF from fcn.00000932 @ 0x97a
+│ └───────> 0x0000098e      0026           movs r6, 0
+│  ╎ ││┌──< 0x00000990      03e0           b 0x99a
+│  ╎ ││││   ; CODE XREF from fcn.00000932 @ 0x964
+│  ╎ └────> 0x00000992      019b           ldr r3, [sp + var_18h]
+│  ╎  │││   0x00000994      049a           ldr r2, [sp + var_ch]
+│  ╎  │││   0x00000996      9342           cmp r3, r2
+│  └──────< 0x00000998      eed3           blo 0x978
+│     │││   ; CODE XREFS from fcn.00000932 @ 0x93a, 0x988, 0x990
+│     └└└─> 0x0000099a      301c           adds r0, r6, 0
+│           0x0000099c      07b0           add sp, 0x1c
+└           0x0000099e      f0bd           pop {r4, r5, r6, r7, pc}

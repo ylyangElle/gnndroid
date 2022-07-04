@@ -1,0 +1,31 @@
+            ; XREFS: CALL 0x000014c0  CALL 0x0000153c  CALL 0x000015c6  CALL 0x000015f4  CALL 0x00001614  
+            ; XREFS: CALL 0x0000163a  CALL 0x00001676  CALL 0x00001692  CALL 0x000016cc  CALL 0x000016ec  
+┌ 48: fcn.00001464 (int16_t arg1);
+│           ; arg int16_t arg1 @ r0
+│           0x00001464      027a           ldrb r2, [r0, 8]            ; arg1
+│           0x00001466      031c           adds r3, r0, 0              ; arg1
+│           0x00001468      002a           cmp r2, 0
+│       ┌─< 0x0000146a      0cd1           bne 0x1486
+│       │   0x0000146c      427a           ldrb r2, [r0, 9]            ; arg1
+│       │   0x0000146e      b020           movs r0, 0xb0
+│       │   0x00001470      002a           cmp r2, 0
+│      ┌──< 0x00001472      0ed0           beq 0x1492
+│      ││   0x00001474      013a           subs r2, 1
+│      ││   0x00001476      5a72           strb r2, [r3, 9]
+│      ││   0x00001478      5a68           ldr r2, [r3, 4]
+│      ││   0x0000147a      111d           adds r1, r2, 4
+│      ││   0x0000147c      1268           ldr r2, [r2]
+│      ││   0x0000147e      1a60           str r2, [r3]
+│      ││   0x00001480      5960           str r1, [r3, 4]
+│      ││   0x00001482      0322           movs r2, 3
+│     ┌───< 0x00001484      00e0           b 0x1488
+│     │││   ; CODE XREF from fcn.00001464 @ 0x146a
+│     ││└─> 0x00001486      013a           subs r2, 1
+│     ││    ; CODE XREF from fcn.00001464 @ 0x1484
+│     └───> 0x00001488      1868           ldr r0, [r3]
+│      │    0x0000148a      1a72           strb r2, [r3, 8]
+│      │    0x0000148c      0202           lsls r2, r0, 8
+│      │    0x0000148e      000e           lsrs r0, r0, 0x18
+│      │    0x00001490      1a60           str r2, [r3]
+│      │    ; CODE XREF from fcn.00001464 @ 0x1472
+└      └──> 0x00001492      7047           bx lr

@@ -1,0 +1,15 @@
+            ; CALL XREF from fcn.000014aa @ 0x14ac
+┌ 22: fcn.00001494 (int16_t arg_0h, int16_t arg_ch);
+│           ; arg int16_t arg_0h @ sp+0x0
+│           ; arg int16_t arg_ch @ sp+0xc
+│           0x00001494      1fb5           push {r0, r1, r2, r3, r4, lr}
+│           0x00001496      0021           movs r1, 0
+│           0x00001498      03ab           add r3, sp, 0xc
+│           0x0000149a      0093           str r3, [sp]
+│           0x0000149c      0c22           movs r2, 0xc
+│           0x0000149e      0b1c           adds r3, r1, 0
+│           0x000014a0      fff7fdfb       bl fcn.00000c9e
+│           0x000014a4      0398           ldr r0, [sp + arg_ch]       ; 0x1ab
+│                                                                      ; aav.0x000001ab
+│           0x000014a6      05b0           add sp, 0x14
+└           0x000014a8      00bd           pop {pc}

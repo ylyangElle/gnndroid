@@ -1,0 +1,11 @@
+digraph G {
+	graph [bb="0,0,0,0",
+		rankdir=TB
+	];
+	node [label="\N",
+		shape=plaintext
+	];
+	subgraph cluster_b468d7f075ea06b1f6b7799a4ee87717 {
+		graph [label="Lorg/arguslab/native_multiple_interactions/MainActivity;.leakImei->(Ljava/lang/String;)V"];
+	}
+}

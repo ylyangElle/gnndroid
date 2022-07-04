@@ -1,0 +1,6 @@
+            ; CALL XREF from _JNIEnv::CallVoidMethod(_jobject*, _jmethodID*, ...) @ 0x8cc ; sym._JNIEnv::CallVoidMethod__jobject____jmethodID___...
+┌ 12: void sym.imp.__stack_chk_fail ();
+│           0x00000708      00c68fe2       add ip, pc, 0
+│           0x0000070c      02ca8ce2       add ip, ip, 0x2000
+│           ; DATA XREF from sym.imp.__stack_chk_fail @ 0x708
+└           0x00000710      d4f8bce5       ldr pc, [ip, 0x8d4]!

@@ -1,0 +1,8 @@
+            ; CALL XREFS from fcn.00000b0c @ 0xb26, 0xb54, 0xb98
+            ; CALL XREF from fcn.00000bcc @ 0xbde
+            ; CALL XREF from fcn.00000d1c @ +0x2c
+┌ 12: void *sym.imp.memcpy (void *s1, const void *s2, size_t n);
+│           0x00000738      00c68fe2       add ip, pc, 0
+│           0x0000073c      02ca8ce2       add ip, ip, 0x2000
+│           ; DATA XREF from sym.imp.memcpy @ 0x738
+└           0x00000740      b4f8bce5       ldr pc, [ip, 0x8b4]!

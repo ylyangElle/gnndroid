@@ -1,0 +1,8 @@
+            ; CALL XREF from fcn.00000ad2 @ 0xae4
+            ; CALL XREF from fcn.00000bcc @ +0xa2
+            ; CALL XREFS from fcn.000014b2 @ +0x2c8, +0x2ce
+┌ 12: sym.imp.abort ();
+│           0x0000072c      00c68fe2       add ip, pc, 0
+│           0x00000730      02ca8ce2       add ip, ip, 0x2000
+│           ; DATA XREF from sym.imp.abort @ 0x72c
+└           0x00000734      bcf8bce5       ldr pc, [ip, 0x8bc]!

@@ -1,0 +1,108 @@
+            ; CALL XREFS from fcn.000012b8 @ 0x155a, 0x1724
+┌ 88: fcn.00001046 (int16_t arg1, uint32_t arg2, int16_t arg4);
+│           ; arg int16_t arg1 @ r0
+│           ; arg uint32_t arg2 @ r1
+│           ; arg int16_t arg4 @ r3
+│           0x00001046      f0b5           push {r4, r5, r6, r7, lr}
+│           0x00001048      051c           adds r5, r0, 0              ; 0x6
+│                                                                      ; aav.0x00000006 ; arg1
+│           0x0000104a      c5b0           sub sp, 0x114
+│           0x0000104c      0429           cmp r1, 4                   ; aav.0x00000004 ; arg2
+│       ┌─< 0x0000104e      00d9           bls 0x1052
+│      ┌──< 0x00001050      85e0           b 0x115e
+│      ││   ; CODE XREF from fcn.00001046 @ 0x104e
+│      │└─> 0x00001052      081c           adds r0, r1, 0              ; 0xc
+│      │                                                               ; aav.0x0000000c ; arg2
+│      │    0x00001054      1e1c           adds r6, r3, 0              ; arg4
+│      │    0x00001056      141c           adds r4, r2, 0              ; 0x6
+│      │                                                               ; aav.0x00000006
+│      │    0x00001058      00f094fb       bl fcn.00001784
+│      │    0x0000105c      031d           adds r3, r0, 4              ; 0x10
+│      │                                                               ; aav.0x00000010
+│      │    0x0000105e      812a           cmp r2, 0x81                ; "."
+│      │    0x00001060      5500           lsls r5, r2, 1
+│      │    0x00001062      0220           movs r0, 2
+│      │    0x00001064      002b           cmp r3, 0
+│      │┌─< 0x00001066      00d0           beq 0x106a
+│     ┌───< 0x00001068      12e1           b 0x1290
+│     │││   ; CODE XREF from fcn.00001046 @ 0x1066
+│     ││└─> 0x0000106a      1104           lsls r1, r2, 0x10
+│     ││    0x0000106c      ab6b           ldr r3, [r5, 0x38]
+│     ││    0x0000106e      090c           lsrs r1, r1, 0x10
+│     ││    0x00001070      2a1d           adds r2, r5, 4              ; 0x10
+│     ││                                                               ; aav.0x00000010
+│     ││    0x00001072      0120           movs r0, 1
+│     ││    ; CODE XREF from fcn.00001046 @ 0x1088
+│     ││┌─> 0x00001074      071c           adds r7, r0, 0
+│     ││╎   0x00001076      b740           lsls r7, r6
+│     ││╎   0x00001078      3942           tst r1, r7
+│    ┌────< 0x0000107a      02d0           beq 0x1082
+│    │││╎   0x0000107c      1f68           ldr r7, [r3]                ; 0x100 ; "4\x18"
+│    │││╎   0x0000107e      0433           adds r3, 4
+│    │││╎   0x00001080      1760           str r7, [r2]
+│    │││╎   ; CODE XREF from fcn.00001046 @ 0x107a
+│    └────> 0x00001082      0136           adds r6, 1
+│     ││╎   0x00001084      0432           adds r2, 4                  ; 0x14
+│     ││╎                                                              ; aav.0x00000014
+│     ││╎   0x00001086      102e           cmp r6, 0x10                ; aav.0x00000010
+│     ││└─< 0x00001088      f4d1           bne 0x1074
+│     ││    0x0000108a      0020           movs r0, 0
+│     ││    0x0000108c      a204           lsls r2, r4, 0x12
+│     ││┌─< 0x0000108e      00d5           bpl 0x1092
+│    ┌────< 0x00001090      fee0           b 0x1290
+│    ││││   ; CODE XREF from fcn.00001046 @ 0x108e
+│    │││└─> 0x00001092      ab63           str r3, [r5, 0x38]
+│    │││┌─< 0x00001094      fce0           b 0x1290
+..
+  │││││││   ; CODE XREF from fcn.00001046 @ +0x80
+  │││││││   ; CODE XREF from fcn.00001046 @ +0xae
+  │││││││   ; CODE XREF from fcn.00001046 @ +0xa6
+  │││││││   ; CODE XREFS from aav.0x00001116 @ +0x3a, +0xfa
+  │││││││   ; CODE XREFS from aav.0x00001215 @ +0xd, +0x15
+  │││││││   ; UNKNOWN XREF from section..rel.plt @ +0x4c
+  │││││││   ;-- aav.0x00001116:
+  │││││││   ; CODE XREF from fcn.00001046 @ +0xce
+  │││││││   ; CODE XREF from aav.0x00001116 @ +0x30
+  │││││││   ; CODE XREF from aav.0x00001116 @ +0x22
+  │││││││   ; CODE XREF from fcn.00001046 @ +0x68
+│ │││││││   ; XREFS: CODE 0x00001050  CODE 0x0000109e  CODE 0x000010b2  CODE 0x000010be  CODE 0x00001108  
+│ │││││││   ; XREFS: CODE 0x0000110c  CODE 0x00001154  CODE 0x0000115a  CODE 0x00001164  CODE 0x00001178  
+│ │││││││   ; XREFS: CODE 0x00001270  
+│ └─└──└──> 0x0000115e      0220           movs r0, 2
+│  │ ││┌──< 0x00001160      96e0           b 0x1290
+   │ ││││   ; CODE XREF from fcn.00001046 @ +0x66
+..
+  │││││││   ; CODE XREF from aav.0x00001116 @ +0x54
+  │││││││   ; CODE XREF from aav.0x00001215 @ +0x53
+  │││││││   ; CODE XREFS from aav.0x00001215 @ +0x41, +0x77
+  │││││││   ; CODE XREF from aav.0x00001116 @ +0x5a
+  │││││││   ; CODE XREFS from aav.0x00001215 @ +0x71, +0x79
+   ││││││   ; CODE XREF from aav.0x00001215 @ +0x4f
+  ╎││││││   ; CODE XREF from aav.0x00001116 @ +0xbc
+  ╎││││││   ; CODE XREF from aav.0x00001116 @ +0xb4
+  ╎││││││   ; CODE XREF from aav.0x00001116 @ +0xa0
+  ╎││││││   ; CODE XREF from aav.0x00001116 @ +0xcc
+  ╎││││││   ; CODE XREF from aav.0x00001116 @ +0xe4
+  ╎││││││   ; CODE XREF from aav.0x00001116 @ +0xc6
+  ╎││││││   ; CODE XREF from aav.0x00001116 @ +0xea
+  ╎││││││   ; CODE XREF from aav.0x00001116 @ +0xf2
+  ╎││││││   ; CODE XREF from aav.0x00001215 @ +0x1
+  ╎││││││   ; CODE XREF from aav.0x00001215 @ +0xb
+  ╎││││││   ; CODE XREF from aav.0x00001116 @ +0x7c
+  ╎││││││   ; CODE XREF from aav.0x00001116 @ +0x6c
+  ╎││││││   ; CODE XREF from aav.0x00001116 @ +0x8a
+  ╎││││││   ; CODE XREF from aav.0x00001215 @ +0x5d
+  ╎││││││   ; CODE XREF from aav.0x00001215 @ +0x2b
+  ╎││││││   ; CODE XREF from aav.0x00001116 @ +0x94
+  ╎││││││   ; CODE XREF from aav.0x00001215 @ +0x65
+   ││││││   ; CODE XREFS from aav.0x00001116 @ +0x46, +0x5e
+   │ ││││   ; CODE XREF from aav.0x00001116 @ +0x58
+    │││││   ; CODE XREF from aav.0x00001215 @ +0x59
+     ││││   ; CODE XREF from aav.0x00001215 @ +0x3b
+     ││││   ; CODE XREF from aav.0x00001215 @ +0x23
+    │││││   ; CODE XREF from aav.0x00001215 @ +0x69
+│    ││││   ; CODE XREFS from fcn.00001046 @ 0x1068, 0x1090, 0x1094
+│    ││││   ; CODE XREF from fcn.00001046 @ +0xbe
+│    ││││   ; CODE XREF from fcn.00001046 @ 0x1160
+│ ───└└└└─> 0x00001290      45b0           add sp, 0x114
+└           0x00001292      f0bd           pop {r4, r5, r6, r7, pc}

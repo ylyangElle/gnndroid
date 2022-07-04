@@ -1,0 +1,9 @@
+            ; CALL XREF from fcn.00000a74 @ 0xab8
+            ; CALL XREF from aav.0x00001116 @ +0x36
+┌ 20: fcn.00001360 ();
+│           0x00001360      0181           strh r1, [r0, 8]
+│           0x00001362      b0fc0191       ldc2 p1, c9, [r0], 4
+│           0x00001366      b0fc01a1       ldc2 p1, c10, [r0], 4
+│           0x0000136a      b0fc01b1       ldc2 p1, c11, [r0], 4
+│           0x0000136e      b0fc1eff       ldc2 p15, c15, [r0], 0x78
+│           0x00001372      2fe1           b 0x15d4
