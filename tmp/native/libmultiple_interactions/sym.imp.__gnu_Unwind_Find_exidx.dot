@@ -1,6 +1,0 @@
-            ; CALL XREF from fcn.000009d0 @ 0x9e4
-┌ 12: sym.imp.__gnu_Unwind_Find_exidx ();
-│           0x00000720      00c68fe2       add ip, pc, 0
-│           0x00000724      02ca8ce2       add ip, ip, 0x2000
-│           ; DATA XREF from sym.imp.__gnu_Unwind_Find_exidx @ 0x720
-└           0x00000728      c4f8bce5       ldr pc, [ip, 0x8c4]!

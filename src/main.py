@@ -4,6 +4,7 @@
 import logging
 import os
 import shutil
+import argparse
 
 from cfg_java import *
 from cfg_so import *
@@ -11,32 +12,67 @@ from cfg_so import *
 from relations_abstract import RelationAbstract
 from graphs_merge import GraphMerging
 from nodes_vectorize import GetGMLof2Parts
+    
+def process_single_apk(apk, apk_path, tmp_path, graphs_path):
+    
+    if not os.path.exists(tmp_path):
+        os.mkdir(tmp_path)
+        
+    if not os.path.exists(graphs_path):
+        os.mkdir(graphs_path)
+    JAVA_CFG = GenJavaCFG(apk_path, tmp_path)
 
-# 配置日志文件和日志级别
-LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
-DATE_FORMAT = "%m/%d/%Y %H:%M:%S %p"
+    so_path = JAVA_CFG.decompile_path
+    Native_CFG = GenSOCFG(so_path, tmp_path)
 
-logging.basicConfig(filename='my.log', level=logging.DEBUG, format=LOG_FORMAT, datefmt=DATE_FORMAT)
+    os.system("ps -ef | grep r2 | awk '{print $2;}' | xargs kill -9")
 
-apk_path = r"apks/apks/native_multiple_interactions.apk"
-#apk_path = r"apks/1115.apk"
-tmp_path = r"./tmp"
+    gml_path = GetGMLof2Parts(tmp_path).node_vec_path
 
-if not os.path.exists(tmp_path):
-    os.mkdir(tmp_path)
-JAVA_CFG = GenJavaCFG(apk_path, tmp_path)
+    relations_abstract = RelationAbstract(tmp_path, gml_path)
+    relations_path = relations_abstract.relations_path
 
-so_path = JAVA_CFG.decompile_path
-Native_CFG = GenSOCFG(so_path, tmp_path)
+    GraphMerging(relations_path, gml_path, graphs_path, apk)
+    
+    if os.path.exists(tmp_path):
+            shutil.rmtree(tmp_path)
 
-os.system("ps -ef | grep r2 | awk '{print $2;}' | xargs kill -9")
+def main(Args):
+    # 配置日志文件和日志级别
+    LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
+    DATE_FORMAT = "%m/%d/%Y %H:%M:%S %p"
+    
+    logging.basicConfig(filename='my.log', level=logging.DEBUG, format=LOG_FORMAT, datefmt=DATE_FORMAT)
 
-gml_path = GetGMLof2Parts(tmp_path).node_vec_path
+    MalDir = Args.maldir
+    GoodDir= Args.gooddir
+    OutputPath = Args.output_path
+    if not os.path.exists(OutputPath):
+        os.mkdir(OutputPath)
+        
+    TmpPath = Args.tmp_path
+    #apk_path = r"apks/apks/native_multiple_interactions.apk"
+    #apk_path = r"apks/1115.apk"
+    
+    for dir in [MalDir, GoodDir]:
+        for apk in os.listdir(dir):
+            apk_path = os.path.join(dir, apk)
+            
+            process_single_apk(apk[:-4], apk_path, \
+                tmp_path=TmpPath, graphs_path=os.path.join(OutputPath, os.path.basename(dir)))
 
-relations_abstract = RelationAbstract(tmp_path, gml_path)
-relations_path = relations_abstract.relations_path
+    
+    
+def ParseArgs():
+    Args = argparse.ArgumentParser(description="Input APKs and Output GMLs of Android Applications.")
+    
+    Args.add_argument("--maldir", default="apks/malware", help="Path to directory containing malware apks.")
+    Args.add_argument("--gooddir", default="apks/benign", help="Path to directory containing benign apks.")
+    #Args.add_argument("--ncpucores", type= int, default= psutil.cpu_count(),help= "Number of CPUs that will be used for processing")
+    Args.add_argument("--output_path", default="graphs/", help="Path to directory of output graphs.")
+    Args.add_argument("--tmp_path", default="tmp/", help="Path to directory for temperary files.")
+    
+    return Args.parse_args()
 
-GraphMerging(relations_path, gml_path)
-
-"""if os.path.exists(tmp_path):
-    shutil.rmtree(tmp_path)"""
+if __name__ == "__main__":
+    main(ParseArgs())

@@ -1,6 +1,0 @@
-            ; CALL XREF from sym.Java_org_arguslab_native_1multiple_1interactions_MainActivity_propagateImei @ 0x812
-┌ 12: fcn.000006fc ();
-│           0x000006fc      00c68fe2       add ip, pc, 0
-│           0x00000700      02ca8ce2       add ip, ip, 0x2000
-│           ; DATA XREF from fcn.000006fc @ 0x6fc
-└           0x00000704      dcf8bce5       ldr pc, [ip, 0x8dc]!

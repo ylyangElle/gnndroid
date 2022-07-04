@@ -1,6 +1,0 @@
-            ; CALL XREFS from fcn.00000da4 @ 0xec4, 0xf58
-┌ 12: loc.imp.__cxa_type_match ();
-│           0x00000750      00c68fe2       add ip, pc, 0
-│           0x00000754      02ca8ce2       add ip, ip, 0x2000
-│           ; DATA XREF from loc.imp.__cxa_type_match @ 0x750
-└           0x00000758      a4f8bce5       ldr pc, [ip, 0x8a4]!

@@ -1,4 +1,0 @@
-            ; CALL XREF from fcn.00000da4 @ 0xfca
-┌ 4: fcn.00000acc ();
-│           0x00000acc      0920           movs r0, 9
-└           0x00000ace      7047           bx lr

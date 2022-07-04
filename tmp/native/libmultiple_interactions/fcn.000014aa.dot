@@ -1,5 +1,0 @@
-            ; CALL XREFS from fcn.000014b2 @ +0x2ac, +0x2b6
-┌ 8: fcn.000014aa ();
-│           0x000014aa      08b5           push {r3, lr}
-│           0x000014ac      fff7f2ff       bl fcn.00001494
-└           0x000014b0      08bd           pop {r3, pc}

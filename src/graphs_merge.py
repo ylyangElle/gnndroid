@@ -3,11 +3,12 @@ import json
 import networkx as nx
 
 class GraphMerging:
-    def __init__(self, relations_path, gmls_path):
+    def __init__(self, relations_path, gmls_path, output_path, apk):
         self.relations_j2n_path = os.path.join(relations_path, "j2n.json")
         self.relations_n2j_path = os.path.join(relations_path, "n2j.json")
         self.gmls_path = gmls_path
-        self.graph_final = r"graph_final.gml"
+        #self.graph_final = r"graph_final.gml"
+        self.graph_final = os.path.join(output_path, apk+".gml")
         
         self.graph_merging()
     
