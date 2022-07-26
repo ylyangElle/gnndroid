@@ -12,8 +12,9 @@ from cfg_so import *
 from relations_abstract import RelationAbstract
 from graphs_merge import GraphMerging
 from nodes_vectorize import GetGMLof2Parts
+from store_native_and_java_gmls import StoreGMLsForAPK
     
-def process_single_apk(apk, apk_path, tmp_path, graphs_path):
+def process_single_apk(apk, apk_path, tmp_path, graphs_path, good_or_mal):
     
     if not os.path.exists(tmp_path):
         os.mkdir(tmp_path)
@@ -33,6 +34,9 @@ def process_single_apk(apk, apk_path, tmp_path, graphs_path):
     relations_path = relations_abstract.relations_path
 
     GraphMerging(relations_path, gml_path, graphs_path, apk)
+    
+    dst_path = os.path.join(r"graphs_to_train", good_or_mal, apk)
+    StoreGMLsForAPK(gml_path, dst_path)
     
     if os.path.exists(tmp_path):
             shutil.rmtree(tmp_path)
@@ -58,8 +62,9 @@ def main(Args):
         for apk in os.listdir(dir):
             apk_path = os.path.join(dir, apk)
             
+            print(os.path.basename(dir))
             process_single_apk(apk[:-4], apk_path, \
-                tmp_path=TmpPath, graphs_path=os.path.join(OutputPath, os.path.basename(dir)))
+                tmp_path=TmpPath, graphs_path=os.path.join(OutputPath, os.path.basename(dir)), good_or_mal = os.path.basename(dir))
 
     
     

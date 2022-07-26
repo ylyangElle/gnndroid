@@ -10,7 +10,8 @@ class GraphMerging:
         #self.graph_final = r"graph_final.gml"
         self.graph_final = os.path.join(output_path, apk+".gml")
         
-        self.graph_merging()
+        if not os.path.exists(self.graph_final):
+            self.graph_merging()
     
     #字典中根据值求键的索引
     def __get_key(self, d, value):
@@ -128,7 +129,7 @@ class GraphMerging:
                     for java_callee in java_callees:
                         node_id, dest_node = self.__get_node_id_from_label("java", java_callee)
                         
-                        self.G_final.add_edge(src_node, dest_node, type=1)
+                        self.G_final.add_edge(src_node, dest_node, type=2)
                               
                 
     def __get_node_id_from_label(self, gml, label):
@@ -210,7 +211,19 @@ class GraphMerging:
             else:
                 self.G_natives[gmls[index][:-4]] = nx.read_gml(os.path.join(self.gmls_path, gmls[index]), label='id')
 
-
+    
+    def __delete_zero_vec(self):
+        self.G_final_f = nx.DiGraph()
+        
+        for label in self.G_final.nodes:
+            if 'vec' in self.G_final.nodes[label].keys():
+                if self.G_final.nodes[label]['vec'] != str([0]*22):
+                    self.G_final_f.add_node(label, vec = self.G_final.nodes[label]['vec'])
+        
+        for edge in self.G_final.edges:
+            if edge[0] in self.G_final_f.nodes and edge[1] in self.G_final_f.nodes:
+                self.G_final_f.add_edge(edge[0], edge[1])
+                
     def graph_merging(self):
         self.G_final = nx.DiGraph()
         self.__read_Gs_from_files()
@@ -221,8 +234,11 @@ class GraphMerging:
         
         if j2n_flag:
             self.__java_to_native_merge()
-        nx.write_gml(self.G_final, self.graph_final)
+            
+        self.__delete_zero_vec()
+        nx.write_gml(self.G_final_f, self.graph_final)
 
     
 """if __name__ == "__main__":
-    GraphMerging(r"tmp/relations", r"tmp/native_and_java_gml_path")"""
+    #relations_path, gmls_path, output_path, apk
+    GraphMerging(r"tmp/relations", r"tmp/native_and_java_gml_path", r"graphs", "1")"""

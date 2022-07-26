@@ -127,6 +127,20 @@ class NodeVectorize: #记得判别native 和 java
 
                 G = nx.read_gml(self.cg_gml_path, label="id")
 
+                """for id in G.nodes:
+                    node_vec = self.__get_node_content(G.nodes[id]['label'])
+                    if node_vec != str([0]*22):
+                        self.G_new.add_node(G.nodes[id]['label'], vec=str(node_vec))
+                
+                G_nodes = list(self.G_new.nodes)
+                #G_new.add_edges_from(G.edges, type=0)
+                for edge in G.edges:
+                    src_node = G.nodes[edge[0]]['label']
+                    dest_node = G.nodes[edge[1]]['label']
+                    if src_node in G_nodes and dest_node in G_nodes:
+                        self.G_new.add_edge(src_node, dest_node)"""
+                
+                
                 for id in G.nodes:
                     node_vec = self.__get_node_content(G.nodes[id]['label'])
                     self.G_new.add_node(G.nodes[id]['label'], vec=str(node_vec))
@@ -135,9 +149,9 @@ class NodeVectorize: #记得判别native 和 java
                 for edge in G.edges:
                     src_node = G.nodes[edge[0]]['label']
                     dest_node = G.nodes[edge[1]]['label']
-
+                    
                     self.G_new.add_edge(src_node, dest_node)
-                
+                    
                 self.dest_gml_path = os.path.join(self.node_vec_path, subdir)
                 nx.write_gml(self.G_new, self.dest_gml_path)
                     
