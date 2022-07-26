@@ -61,10 +61,17 @@ def main(Args):
     for dir in [MalDir, GoodDir]:
         for apk in os.listdir(dir):
             apk_path = os.path.join(dir, apk)
+            try:
+                process_single_apk(apk[:-4], apk_path, \
+                    tmp_path=TmpPath, graphs_path=os.path.join(OutputPath, os.path.basename(dir)), good_or_mal = os.path.basename(dir))
+            except Exception as e:
+                print(e)
+                if os.path.exists(TmpPath):
+                    shutil.rmtree(TmpPath)
+                pass
+                
+
             
-            print(os.path.basename(dir))
-            process_single_apk(apk[:-4], apk_path, \
-                tmp_path=TmpPath, graphs_path=os.path.join(OutputPath, os.path.basename(dir)), good_or_mal = os.path.basename(dir))
 
     
     

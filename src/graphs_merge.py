@@ -170,7 +170,6 @@ class GraphMerging:
         
         self.relations_j2n_for_merge = {}
         for java_node_id in self.relations_j2n.keys():
-
             lib_name = list(self.relations_j2n[java_node_id].keys())[0]
             native_node_id = self.__get_node_id_from_label(lib_name, \
                 self.relations_j2n[java_node_id][lib_name])
@@ -221,8 +220,9 @@ class GraphMerging:
                     self.G_final_f.add_node(label, vec = self.G_final.nodes[label]['vec'])
         
         for edge in self.G_final.edges:
+
             if edge[0] in self.G_final_f.nodes and edge[1] in self.G_final_f.nodes:
-                self.G_final_f.add_edge(edge[0], edge[1])
+                self.G_final_f.add_edge(edge[0], edge[1], type=self.G_final.edges[edge[0], edge[1]]['type'])
                 
     def graph_merging(self):
         self.G_final = nx.DiGraph()
@@ -239,6 +239,6 @@ class GraphMerging:
         nx.write_gml(self.G_final_f, self.graph_final)
 
     
-"""if __name__ == "__main__":
+if __name__ == "__main__":
     #relations_path, gmls_path, output_path, apk
-    GraphMerging(r"tmp/relations", r"tmp/native_and_java_gml_path", r"graphs", "1")"""
+    GraphMerging(r"tmp/relations", r"tmp/native_and_java_gml_path", r"graphs", "1")
