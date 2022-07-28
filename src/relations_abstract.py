@@ -1,26 +1,28 @@
+from asyncio.log import logger
 from cProfile import label
+import logging
 import os
 """from relations_abstract_j2n import RelationsAbstract_J2N
 from relations_abstract_n2j import RelationsAbstract_N2J"""
 
 class RelationAbstract:
     def __init__(self, tmp_path, gml_path):
+        self.tmp_path = tmp_path
+
         self.relations_path = os.path.join(tmp_path, "relations")
         self.gml_path = gml_path
         if not os.path.exists(self.relations_path):
             os.mkdir(self.relations_path)
         self.relations_n2j_path = os.path.join(self.relations_path, "n2j.json")
         self.relations_j2n_path = os.path.join(self.relations_path, "j2n.json")
-        
-        
+  
         self.__init_j2n()
         self.__init_n2j()
-        
-        
+       
     def __init_j2n(self):
-        RelationsAbstract_J2N(self.relations_j2n_path, self.gml_path)
+        RelationsAbstract_J2N(self.tmp_path, self.relations_j2n_path, self.gml_path)
     def __init_n2j(self):
-        RelationsAbstract_N2J(self.relations_n2j_path)
+        RelationsAbstract_N2J(self.tmp_path, self.relations_n2j_path)
         
         
         
@@ -30,17 +32,18 @@ import re
 import json
 
 class RelationsAbstract_J2N:
-    def __init__(self, relations_j2n_path, gml_path):
-        #self.tmp = tmp_path
+    def __init__(self, tmp_path, relations_j2n_path, gml_path):
+        self.tmp_path = tmp_path
         self.relations_j2n_path = relations_j2n_path
-        self.fcg = r"tmp/java/callgraph.gml"
-        self.cfg = r"tmp/java/java_cfg"
+        self.fcg = os.path.join(self.tmp_path, r"java/callgraph.gml")
+        self.cfg = os.path.join(self.tmp_path, r"java/java_cfg")
         #self.relations = os.path.join(tmp_path, "relations")
         self.relation_j2n = {}
         self.gml_path = gml_path
-        
+
         self.analysis_java_to_native()
         self.__store_j2n_relations_as_json()
+
     
     def __store_j2n_relations_as_json(self):
         for java_func_id in self.id_native_func.keys():
@@ -56,7 +59,10 @@ class RelationsAbstract_J2N:
                  
     def __get_java_name_and_native_func_name(self, label):
         #"Lorg/arguslab/native_multiple_interactions/MainActivity;->propagateImei(Lorg/arguslab/native_multiple_interactions/Data;)V [access_flags=public native] @ 0x0"
-        label_split = label.split(";->")
+        if ";->" in label:
+            label_split = label.split(";->")
+        elif "->" in label:
+            label_split = label.split("->")
         package_name = label_split[0].lstrip("L")
         native_func_name = label_split[1].split(" [access_flags")[0]
 
@@ -110,7 +116,7 @@ class RelationsAbstract_J2N:
         for id in G_java.nodes:
             if regex.findall(G_java.nodes[id]['label']):
                 package_name, native_func_name = self.__get_java_name_and_native_func_name(G_java.nodes[id]['label'])
-                smali_path = os.path.join(r"tmp/apk_decompile/smali", package_name + ".smali")
+                smali_path = os.path.join(os.path.join(self.tmp_path, r"apk_decompile/smali"), package_name + ".smali")
                 #self.__find_native_lib(smali_path)
                 #可能存在多个native函数在一个so文件的情况，所以用字典存储要找的smali文件位置
                 if smali_path not in self.record_lib_id.keys():
@@ -128,10 +134,11 @@ import re
 import json
 
 class RelationsAbstract_N2J:
-    def __init__(self, relations_n2j_path):
+    def __init__(self, tmp_path, relations_n2j_path):
+        self.tmp_path = tmp_path
         self.relations_n2j_path = relations_n2j_path
         
-        self.native_cfg_path = r"tmp/native"
+        self.native_cfg_path = os.path.join(self.tmp_path, "native")
         self.java_class_regex = re.compile('"([A-Za-z0-9_\/]+)"')
         self.relations_n2j = {}
         

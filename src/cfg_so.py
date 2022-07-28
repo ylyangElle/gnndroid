@@ -1,21 +1,33 @@
+import logging
 import os
 import timeout_decorator
 import shutil
 
 class GenSOCFG:
-    def __init__(self, decompile_path, tmp_path):
+    def __init__(self, decompile_path, tmp_path, process_id):
         self.so_path = os.path.join(decompile_path, r"lib/armeabi")
         self.so_cfg_path = os.path.join(tmp_path, "native")
         self.r2_gen_path = "./src/r2_gen_single.py"
         self.r2_tmp = os.path.join(tmp_path, "r2")
+        self.process_id = process_id
+        self.tmp_path = tmp_path
         
+        self.cp_r2_path = os.path.join(tmp_path, "r2_gen_single" + self.process_id + ".py")
+        self.copy_r2_path_and_modify()
         self.get_so_cfg_of_apk()
         
         self.__rm_tmp_r2_dir()
+    
+    def copy_r2_path_and_modify(self):
+        shutil.copyfile(self.r2_gen_path, self.cp_r2_path)
+#string = 'r\"tmp9561\/r2\"'
+        replace_text = 'r\"' + self.tmp_path + '\/r2\"'
+        os.system("sed -i 's/{}/{}/g' {}".format("FLAGS", replace_text, self.cp_r2_path))
+
         
     @timeout_decorator.timeout(15)
     def __r2_cmd(self, so_path):
-        os.system("r2 -i " + self.r2_gen_path + " " + so_path)
+        os.system("r2 -i " + self.cp_r2_path + " " + so_path)
 
     def __rm_tmp_r2_dir(self):
         if os.path.exists(self.r2_tmp):
@@ -34,12 +46,12 @@ class GenSOCFG:
         so_cfg_path = os.path.join(self.so_cfg_path, so_name + ".dot")
         so_callgraph_gml_path = os.path.join(self.so_cfg_path, so_name + ".gml")
         #os.system("cp tmp/r2/cfg_cur.dot " + so_cfg_path)
-        os.system("cp tmp/r2/callgraph.gml " + so_callgraph_gml_path)
+        os.system("cp {}/callgraph.gml ".format(self.r2_tmp) + so_callgraph_gml_path)
         
         dest_path = os.path.join(self.so_cfg_path, so_name)
         if not os.path.exists(dest_path):
             os.mkdir(dest_path)
-        os.system("cp -r tmp/r2/func_cfgs/* " + dest_path)
+        os.system("cp -r {}/func_cfgs/* ".format(self.r2_tmp) + dest_path)
 
         
         

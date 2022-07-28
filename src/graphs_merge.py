@@ -1,3 +1,4 @@
+import logging
 import os
 import json
 import networkx as nx
@@ -170,7 +171,9 @@ class GraphMerging:
         
         self.relations_j2n_for_merge = {}
         for java_node_id in self.relations_j2n.keys():
+
             lib_name = list(self.relations_j2n[java_node_id].keys())[0]
+
             native_node_id = self.__get_node_id_from_label(lib_name, \
                 self.relations_j2n[java_node_id][lib_name])
             
@@ -239,6 +242,6 @@ class GraphMerging:
         nx.write_gml(self.G_final_f, self.graph_final)
 
     
-if __name__ == "__main__":
+"""if __name__ == "__main__":
     #relations_path, gmls_path, output_path, apk
-    GraphMerging(r"tmp/relations", r"tmp/native_and_java_gml_path", r"graphs", "1")
+    GraphMerging(r"tmp/relations", r"tmp/native_and_java_gml_path", r"graphs", "1")"""

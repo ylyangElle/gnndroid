@@ -7,7 +7,6 @@ import shutil
 import argparse
 import psutil
 import multiprocessing as mp
-import math
 
 from cfg_java import *
 from cfg_so import *
@@ -17,46 +16,44 @@ from graphs_merge import GraphMerging
 from nodes_vectorize import GetGMLof2Parts
 from store_native_and_java_gmls import StoreGMLsForAPK
     
-def process_single_apk(apk, apk_path, tmp_path, graphs_path, good_or_mal, process_id):
+def process_single_apk(apk, apk_path, tmp_path, graphs_path, good_or_mal):
     
-    logging.info("----------------------------------开始处理{} apk：{} ----- 进程{}".format(good_or_mal, apk, process_id))
+    logging.info("{} tmp path**************************".format(tmp_path))
     if not os.path.exists(tmp_path):
         os.mkdir(tmp_path)
         
     if not os.path.exists(graphs_path):
         os.mkdir(graphs_path)
-    
-    logging.info("正在生成apk {} 的Java CFGs".format(apk))
     JAVA_CFG = GenJavaCFG(apk_path, tmp_path)
 
-    logging.info("正在生成apk {} 的Native CFGs".format(apk))
     so_path = JAVA_CFG.decompile_path
     Native_CFG = GenSOCFG(so_path, tmp_path, process_id)
 
     os.system("ps -ef | grep r2 | awk '{print $2;}' | xargs kill -9")
 
-    logging.info("RelationshipsAbstract...")
     gml_path = GetGMLof2Parts(tmp_path).node_vec_path
 
+    logging.info("relationAbstract tmp_path={}, gml_path={}".format(tmp_path, gml_path))
     relations_abstract = RelationAbstract(tmp_path, gml_path)
     relations_path = relations_abstract.relations_path
+    logging.info("relations_path={}, gml_path={}, graphs_path={}, apk={}".format(relations_path,gml_path, graphs_path, apk))
 
-    logging.info("GraphMerging...")
     GraphMerging(relations_path, gml_path, graphs_path, apk)
     
     
     dst_path = os.path.join(r"graphs_to_train", good_or_mal, apk)
-
+    logging.info("gml_path={}, dst_path={}".format(gml_path, dst_path))
     StoreGMLsForAPK(gml_path, dst_path)
     
-    logging.debug("----------------------------------apk {} 图生成成功，删除tmp文件".format(apk))
+    logging.info("shutil {}".format(tmp_path))
     if os.path.exists(tmp_path):
         shutil.rmtree(tmp_path)
 
-def processing_all_apks(TmpPath, OutputPath, dir, index, apk_list):
-    logging.info("processing_all_apks begin dir {}  index {} apk_list_size {}".format(dir, index, len(apk_list)))
-    for apk in apk_list:
-        logging.info("111111111111111111111111111111111111 {} {}".format(index, apk))
+def processing_all_apks(pool, TmpPath, OutputPath, dir, index):
+
+    apk_counts = len(os.listdir(dir))
+    for i in range(i*apk_counts/index)
+    for apk in os.listdir(dir):
         apk_path = os.path.join(dir, apk)
         classification = os.path.basename(dir) #是malware还是benign
         dst_gml_path = os.path.join(OutputPath, classification, apk[:-4] + '.gml')
@@ -66,40 +63,20 @@ def processing_all_apks(TmpPath, OutputPath, dir, index, apk_list):
         tmp_path = TmpPath + process_id
         
         if os.path.exists(dst_gml_path):
-            logging.info("----------------------------------apk {}已生成图".format(apk))
-            continue
+            pass
         
         else:
             try:
-                process_single_apk(apk[:-4], apk_path, \
-                tmp_path=tmp_path, graphs_path=os.path.join(OutputPath, classification),\
-                    good_or_mal = classification, process_id = process_id)
+                ProcessingResult = pool.apply_async(process_single_apk, \
+                    args = (apk[:-4], apk_path, tmp_path, os.path.join(OutputPath, classification), classification))
+                """process_single_apk(apk[:-4], apk_path, \
+                    tmp_path=TmpPath, graphs_path=os.path.join(OutputPath, classification), good_or_mal = classification)"""
             except Exception as e:
                 logging.error("{} -- 失败,原因{}".format(apk, e))
                 if os.path.exists(tmp_path):
                     shutil.rmtree(tmp_path)
                 continue
-
-def addProcess(TmpPath, OutputPath, dir, ProcessNumber, startIndex = 0):
-    process_list = []
-    total_apk_list = os.listdir(dir)
-    apk_counts = len(total_apk_list)   # 总apk数
-    deal_num = int(math.ceil(apk_counts/ProcessNumber)) # 单个进程处理apk个数，总apk个数除以进程数
-    # n号进程处理[n * 单进程分片数, (n * 单进程分片数)+单进程分片数 )
-    for i in range(0, ProcessNumber):
-        start = i*deal_num
-        end = (i + 1)*deal_num
-        if (end > apk_counts):
-            # 防止溢出
-            end = apk_counts
-        
-        logging.info("dir{} start {} end {}".format(dir, start, end))
-        apk_list = total_apk_list[start: end]
-        p = mp.Process(target=processing_all_apks, args=(TmpPath, OutputPath, dir, (startIndex + i), apk_list))
-        p.start()
-        process_list.append(p)
-    return process_list
-
+            
 def main(Args):
     # 配置日志文件和日志级别
     LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
@@ -112,20 +89,21 @@ def main(Args):
     OutputPath = Args.output_path
     if not os.path.exists(OutputPath):
         os.mkdir(OutputPath)
-
+        
     TmpPath = Args.tmp_path
 
     ProcessNumber = Args.ncpucores
-    process_list = []
-
-    # 处理gooddir
-    process_list += addProcess(TmpPath, OutputPath, GoodDir, ProcessNumber)
-
-    # 处理maldir
-    process_list += addProcess(TmpPath, OutputPath, MalDir, ProcessNumber, ProcessNumber)
-
-    for process in process_list:
-        process.join()
+    pool = mp.Pool(int(ProcessNumber))
+    index = 0
+    """for dir in [MalDir, GoodDir]:
+        logging.info("000000000000000000000    "+ str(ProcessNumber))
+        processing_all_apks(pool, TmpPath, OutputPath, dir, index)
+        index += 1"""
+        
+    for i in range(ProcessNumber):
+        processing_all_apks(pool, TmpPath, OutputPath, dir, i)
+    pool.close()
+    pool.join()
     
 def ParseArgs():
     Args = argparse.ArgumentParser(description="Input APKs and Output GMLs of Android Applications.")

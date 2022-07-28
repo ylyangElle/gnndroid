@@ -5,6 +5,7 @@ from numpy import dot
 from opcode_catg import opcode_bytecode
 from opcode_catg import opcode_assembly
 import re
+import logging
 
 class NodeVectorize: #记得判别native 和 java
     """把每个func文件的内容根据指令分类统计量，得到对应的向量，加入各自的gml文件中
@@ -55,7 +56,11 @@ class NodeVectorize: #记得判别native 和 java
         
     def __get_java_package_and_func_name(self, label):
         #"Lorg/arguslab/native_multiple_interactions/MainActivity;->propagateImei(Lorg/arguslab/native_multiple_interactions/Data;)V [access_flags=public native] @ 0x0"
-        label_split = label.split(";->")
+        # [J->clone()Ljava/lang/Object
+        if ";->" in label:
+            label_split = label.split(";->")
+        elif "->" in label:
+            label_split = label.split("->")
         package_name = label_split[0].lstrip("L")
         java_func_name = label_split[1].split("(")[0].replace("<", "_").replace(">", "_")
 
@@ -99,7 +104,12 @@ class NodeVectorize: #记得判别native 和 java
         if self.native_or_java == "native":
             so_path = self.cg_gml_path[:-4]
 
-            func_path = os.path.join(so_path, func_name + ".dot")
+            if os.path.exists(os.path.join(so_path, func_name + ".dot")):
+                func_path = os.path.join(so_path, func_name + ".dot")
+            elif os.path.exists(os.path.join(so_path, func_name)):
+                func_path = os.path.join(so_path, func_name)
+            else:
+                return
             
             with open(func_path) as f:
                 func_vec = self.__node_vec(f)
